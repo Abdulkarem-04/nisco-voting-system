@@ -5,12 +5,14 @@ import Welcome from './pages/Welcome';
 import Ballot from './pages/Ballot';
 import AlreadyVoted from './pages/AlreadyVoted';
 import Footer from './components/Footer';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
         <Routes>
+          <Route path="/secret-admin-monitor" element={<AdminDashboard />} />
           <Route path="/" element={<Login />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/ballot" element={<Ballot />} />

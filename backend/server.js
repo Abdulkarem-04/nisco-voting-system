@@ -278,6 +278,34 @@ app.post('/api/submit-vote', async (req, res) => {
     }
 });
 
+// ------------------------------------------------------------------
+// ADMIN ROUTE: Get Live Tally (Secret)
+// ------------------------------------------------------------------
+app.get('/api/admin-results', async (req, res) => {
+    // Basic Security: Check for a secret key in the URL
+    // You will access it like: http://localhost:5000/api/admin-results?secret=nisco2026
+    const secret = req.query.secret;
+    if (secret !== 'nisco2026') {
+        return res.status(401).json({ error: 'Unauthorized access.' });
+    }
+
+    try {
+        // Fetch the vote counts
+        const { data: tally } = await supabase.from('election_tally').select('*');
+        
+        // Fetch total turnout
+        const { data: turnout } = await supabase.from('total_turnout').select('*').single();
+
+        res.json({
+            tally: tally || [],
+            totalTurnout: turnout ? turnout.total_voters : 0
+        });
+    } catch (error) {
+        console.error("Admin fetch error:", error);
+        res.status(500).json({ error: 'Failed to fetch admin data.' });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`NISCO Backend Server is running on http://localhost:${port}`);
