@@ -306,6 +306,25 @@ app.get('/api/admin-results', async (req, res) => {
     }
 });
 
+// ------------------------------------------------------------------
+// PUBLIC ROUTE: Get Final Election Results
+// ------------------------------------------------------------------
+app.get('/api/public-results', async (req, res) => {
+    try {
+        // Fetch the safe public tally
+        const { data: results, error } = await supabase
+            .from('public_election_tally')
+            .select('*');
+
+        if (error) throw error;
+
+        res.json(results);
+    } catch (error) {
+        console.error("Public results fetch error:", error);
+        res.status(500).json({ error: 'Failed to fetch public results.' });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`NISCO Backend Server is running on http://localhost:${port}`);

@@ -6,6 +6,7 @@ import Ballot from './pages/Ballot';
 import AlreadyVoted from './pages/AlreadyVoted';
 import Footer from './components/Footer';
 import AdminDashboard from './pages/AdminDashboard';
+import PublicResults from './pages/PublicResults';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <Routes>
           <Route path="/secret-admin-monitor" element={<AdminDashboard />} />
+          <Route path="/results" element={<PublicResults />} />
           <Route path="/" element={<Login />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/ballot" element={<Ballot />} />
